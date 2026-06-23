@@ -1,0 +1,14 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      # Persist the SQLite database across container restarts.
+      - pytoni-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  pytoni-data:

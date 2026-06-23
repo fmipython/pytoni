@@ -1,0 +1,26 @@
+# Virtualenv / caches
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+.ruff_cache
+.mypy_cache
+
+# Local SQLite database (don't bake data into the image)
+pytoni.db
+pytoni.db-shm
+pytoni.db-wal
+
+# Secrets and local env
+.env
+.envrc
+
+# VCS / tooling
+.git
+.gitignore
+.claude
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
