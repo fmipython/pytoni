@@ -1,9 +1,11 @@
 from datetime import datetime
 
 from agno.agent import Agent
-from agno.db.sqlite import SqliteDb
+
+# from agno.db.sqlite import SqliteDb
 from agno.models.openrouter import OpenRouter
-from agno.tracing import setup_tracing
+
+# from agno.tracing import setup_tracing
 
 from pytoni.prompts.course_manager import COURSE_MANAGER_PROMPT
 import pytoni.tools as tools
