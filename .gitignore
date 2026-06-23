@@ -216,3 +216,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project: SQLite database files (including WAL/SHM sidecars)
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Alembic: generated boilerplate (migrations under versions/ ARE tracked)
+alembic/README
