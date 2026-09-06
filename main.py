@@ -1,3 +1,4 @@
+import dotenv
 from fastapi import Depends, FastAPI
 from sqlalchemy.orm import Session
 
@@ -5,8 +6,10 @@ from pytoni.agents.course_manager import create_agent
 from pytoni.auth import TokenClaims, verify_token
 from pytoni.database import get_db
 from pytoni.db_models import Message
-from pytoni.models import UserMessage, AssistantMessage
+from pytoni.models import AssistantMessage, UserMessage
+from pytoni.usage_logger import log_chat_usage
 
+dotenv.load_dotenv()
 app = FastAPI(title="pytoni")
 
 
@@ -18,6 +21,7 @@ def chat(
 ) -> AssistantMessage:
     agent = create_agent()
     response = agent.run(user_message.message)
+    log_chat_usage(claims, user_message.message, response)
 
     assistant_message = AssistantMessage(message=response.content)
 

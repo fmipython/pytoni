@@ -30,8 +30,9 @@ COPY --from=builder /app /app
 # Put the venv on PATH so `fastapi`/`alembic`/`python` resolve to it.
 ENV PATH="/app/.venv/bin:$PATH"
 
-# Persist the SQLite database outside the image layer by default.
+# Persist the SQLite database and usage log outside the image layer by default.
 ENV DATABASE_URL="sqlite:////app/data/pytoni.db"
+ENV AGENT_LOG_FILE="/app/data/agent_usage.log"
 
 # Run as a non-root user; give it ownership of the data directory.
 RUN mkdir -p /app/data \
