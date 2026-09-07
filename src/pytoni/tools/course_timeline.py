@@ -9,7 +9,7 @@ def get_calendar() -> str:
     result = subprocess.run(
         ["uv", "run", "main.py", "get-calendar"],
         check=True,
-        cwd="/Users/lyuboslav.karev/fmipython/course-db",
+        cwd="/Users/lyubolp/course-db",
         capture_output=True,
     )
 
