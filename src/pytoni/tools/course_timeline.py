@@ -1,4 +1,6 @@
-import subprocess
+import requests
+
+from pytoni.config import get_settings
 
 
 def get_calendar() -> str:
@@ -6,11 +8,7 @@ def get_calendar() -> str:
     Fetches the calendar of the course, containing all dates relevant to the course.
     Lecture days, homework and project deadlines.
     """
-    result = subprocess.run(
-        ["uv", "run", "main.py", "get-calendar"],
-        check=True,
-        cwd="/Users/lyubolp/course-db",
-        capture_output=True,
-    )
+    response = requests.get(f"{get_settings().course_db_url}/calendar")
+    response.raise_for_status()
 
-    return result.stdout.decode("utf-8").strip()
+    return response.text.strip()

@@ -15,6 +15,9 @@ class Settings(BaseSettings):
     # Small allowance for clock skew between the bot and the backend (seconds).
     jwt_leeway_seconds: int = 10
 
+    # Base URL of the course-db service (exposes GET /calendar).
+    course_db_url: str = "http://localhost:8001"
+
 
 @lru_cache
 def get_settings() -> Settings:
