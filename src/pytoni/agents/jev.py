@@ -4,12 +4,12 @@ import os
 import requests
 from dotenv import load_dotenv
 
-from pytoni.prompts.jev import JEV_PROMPT, PYTONI_CAN_DO, PYTONI_CANNOT_DO
+from pytoni.prompts.jev import CATEGORIES, JEV_PROMPT, PYTONI_CAN_DO, PYTONI_CANNOT_DO
 
 load_dotenv()  # Load environment variables from .env file
 
 
-def ask(user_question: str, threshold: float = 0.7) -> tuple[bool, float]:
+def ask(user_question: str, threshold: float = 0.7) -> tuple[str, float]:
     response = requests.post(
         url="https://openrouter.ai/api/alpha/decisions",
         headers={
@@ -22,9 +22,9 @@ def ask(user_question: str, threshold: float = 0.7) -> tuple[bool, float]:
                 "state": user_question,
                 "questions": {
                     "can_answer": {
-                        "type": "noul",
+                        "type": "choice",
                         "instructions": JEV_PROMPT,
-                        "criteria": {"true": PYTONI_CAN_DO, "false": PYTONI_CANNOT_DO},
+                        "criteria": CATEGORIES,
                     }
                 },
             }
@@ -36,5 +36,10 @@ def ask(user_question: str, threshold: float = 0.7) -> tuple[bool, float]:
 
     answers = response.json()["answers"]
 
-    confidence = float(answers["can_answer"]["noul"])
-    return confidence >= threshold, confidence
+    print(answers)
+    answer = answers["can_answer"]["choice"]
+    return answer, answers["can_answer"]["probabilities"][answer]
+
+
+def call_jev(query: str, questions: dict[str, str]) -> dict:
+    pass
