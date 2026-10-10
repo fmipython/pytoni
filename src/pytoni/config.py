@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     # Base URL of the course-db service (exposes GET /calendar).
     course_db_url: str = "http://localhost:8001"
 
+    jev_endpoint: str = "https://openrouter.ai/api/alpha/decisions"
 
 @lru_cache
 def get_settings() -> Settings:
