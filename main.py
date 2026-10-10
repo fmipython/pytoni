@@ -40,6 +40,11 @@ def chat(
     return assistant_message
 
 
+@app.get("/health")
+def health() -> dict:
+    return {"status": "ok"}
+
+
 if __name__ == "__main__":
     import uvicorn
 
