@@ -38,7 +38,7 @@ def make_token(discord_id: str, discord_name: str) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("message", help="message to send to the agent")
-    parser.add_argument("--url", default="http://127.0.0.1:8000/chat")
+    parser.add_argument("--url", default="http://192.168.1.125:8003/chat")
     parser.add_argument("--discord-id", default="123456789")
     parser.add_argument("--discord-name", default="dummy-user")
     args = parser.parse_args()
