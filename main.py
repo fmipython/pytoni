@@ -2,6 +2,7 @@ from fastapi import Depends, FastAPI
 from sqlalchemy.orm import Session
 
 from pytoni.agents.course_manager import create_agent
+from pytoni.agents.jev import is_question_for_pytoni
 from pytoni.auth import TokenClaims, verify_token
 from pytoni.database import get_db
 from pytoni.db_models import Message
@@ -17,11 +18,19 @@ def chat(
     claims: TokenClaims = Depends(verify_token),
     db: Session = Depends(get_db),
 ) -> AssistantMessage:
-    agent = create_agent()
-    response = agent.run(user_message.message)
-    log_chat_usage(claims, user_message.message, response)
 
-    assistant_message = AssistantMessage(message=response.content)
+    if is_question_for_pytoni(user_message.message):
+        agent = create_agent()
+        response = agent.run(user_message.message)
+        log_chat_usage(claims, user_message.message, response)
+
+        assistant_response = response.content
+    else:
+        assistant_response = (
+            "Не мога да отговоря на този въпрос - мога да ти само отговоря на въпроси свързани с курса."
+        )
+
+    assistant_message = AssistantMessage(message=assistant_response)
 
     db.add(
         Message(
