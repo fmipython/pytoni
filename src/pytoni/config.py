@@ -20,6 +20,15 @@ class Settings(BaseSettings):
 
     jev_endpoint: str = "https://openrouter.ai/api/alpha/decisions"
 
+    openrouter_api_key: str
+
+    database_url: str = "sqlite:///pytoni.db"
+    agent_log_file: str = "agent_usage.log"
+
+    course_manager_model: str = "deepseek/deepseek-v4-flash-0731"
+    jev_model: str = "typesafe/jev-1.13"
+
+
 @lru_cache
 def get_settings() -> Settings:
     return Settings()

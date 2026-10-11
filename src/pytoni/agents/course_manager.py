@@ -2,17 +2,17 @@ from collections.abc import Callable
 from datetime import datetime
 
 from agno.agent import Agent
-
-# from agno.db.sqlite import SqliteDb
 from agno.models.openrouter import OpenRouter
 
 from pytoni import tools as default_tools
+from pytoni.config import get_settings
 from pytoni.prompts.course_manager import COURSE_MANAGER_PROMPT
 
 # from agno.tracing import setup_tracing
 
 
 def create_agent(tools: list[Callable] | None = None, current_date: datetime | None = None) -> Agent:
+    settings = get_settings()
     if tools is None:
         tools = [default_tools.fetch_readme, default_tools.get_calendar]
     if current_date is None:
@@ -22,7 +22,7 @@ def create_agent(tools: list[Callable] | None = None, current_date: datetime | N
         id="course_manager",
         name="Course Manager",
         role="Manage the course timelines and deadlines. Provide information about important dates and deadlines for the course.",
-        model=OpenRouter(id="deepseek/deepseek-v4-flash-0731"),
+        model=OpenRouter(id=settings.course_manager_model, api_key=settings.openrouter_api_key),
         markdown=True,
         system_message=COURSE_MANAGER_PROMPT.format(
             current_date=current_date.strftime("%Y-%m-%d"),
@@ -30,9 +30,6 @@ def create_agent(tools: list[Callable] | None = None, current_date: datetime | N
         ),
         system_message_role="system",
         tools=tools,
-        # add_history_to_context=True,
-        # num_history_runs=5,
-        # db=db,
     )
 
     return course_manager

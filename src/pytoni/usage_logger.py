@@ -1,13 +1,13 @@
 import json
 import logging
-import os
 from datetime import datetime, timezone
 
 from agno.run.agent import RunOutput
 
 from pytoni.auth import TokenClaims
+from pytoni.config import get_settings
 
-LOG_FILE = os.getenv("AGENT_LOG_FILE", "agent_usage.log")
+LOG_FILE = get_settings().agent_log_file
 
 usage_logger = logging.getLogger("pytoni.usage")
 usage_logger.setLevel(logging.INFO)

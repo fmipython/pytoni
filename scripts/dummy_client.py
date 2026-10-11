@@ -12,13 +12,10 @@ import argparse
 import sys
 import time
 
-import dotenv
 import httpx
 import jwt
 
-dotenv.load_dotenv()
-
-from pytoni.config import get_settings  # noqa: E402
+from pytoni.config import get_settings
 
 
 def make_token(discord_id: str, discord_name: str) -> str:

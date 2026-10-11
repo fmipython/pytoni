@@ -1,4 +1,3 @@
-import dotenv
 from fastapi import Depends, FastAPI
 from sqlalchemy.orm import Session
 
@@ -9,7 +8,6 @@ from pytoni.db_models import Message
 from pytoni.models import AssistantMessage, UserMessage
 from pytoni.usage_logger import log_chat_usage
 
-dotenv.load_dotenv()
 app = FastAPI(title="pytoni")
 
 
