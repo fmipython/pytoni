@@ -24,14 +24,14 @@ parser.add_argument("--jev", action="store_true", help="Evaluate the Jev can-Pyt
 args = parser.parse_args()
 
 if args.jev:
-    from pytoni.agents.jev import ask
+    from pytoni.agents.jev import is_question_for_pytoni
 
     with (Path(__file__).parent / "jev_dataset.csv").open(newline="", encoding="utf-8") as f:
         rows = [(r["question"], r["can_answer"] == "true") for r in csv.DictReader(f)]
 
     correct = 0
     for q, exp in rows:
-        result, confidence = ask(q)
+        result, confidence = is_question_for_pytoni(q)
 
         is_correct = result == exp
         correct += 1 if is_correct else 0

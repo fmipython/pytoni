@@ -6,7 +6,7 @@ from pytoni.config import get_settings
 from pytoni.prompts.jev import JEV_PROMPT, PYTONI_CAN_DO, PYTONI_CANNOT_DO
 
 
-def ask(user_question: str, threshold: float = 0.7) -> tuple[bool, float]:
+def is_question_for_pytoni(user_question: str, threshold: float = 0.7) -> tuple[bool, float]:
     question = {
         "can_answer": {
             "type": "noul",
