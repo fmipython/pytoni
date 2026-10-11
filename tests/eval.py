@@ -3,16 +3,14 @@ import csv
 from datetime import datetime
 from pathlib import Path
 
-import dotenv
 from agno.eval.accuracy import AccuracyEval, AccuracyResult
 from agno.models.openrouter import OpenRouter
 from rich.console import Console
 from rich.table import Table
 
 from pytoni.agents.course_manager import create_agent
+from pytoni.config import get_settings
 from tests.mocks import fetch_readme, get_calendar
-
-dotenv.load_dotenv()
 
 DATASET_PATH = Path(__file__).parent / "dataset.csv"
 with DATASET_PATH.open(newline="", encoding="utf-8") as f:
@@ -87,7 +85,7 @@ for question, expected_answer in COURSE_MANAGER_DATASET:
         input=question,
         expected_output=expected_answer,
         additional_guidelines="If the actual answer contains synonyms or paraphrased information that matches the expected answer, consider it correct. Focus on the correctness of the information rather than exact wording.",
-        model=OpenRouter(id="openai/gpt-5.6-luna"),
+        model=OpenRouter(id="openai/gpt-5.6-luna", api_key=get_settings().openrouter_api_key),
     )
 
     result: AccuracyResult | None = evaluation.run(print_results=args.verbose, print_summary=args.verbose)
